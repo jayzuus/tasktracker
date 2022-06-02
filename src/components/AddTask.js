@@ -1,13 +1,27 @@
 import { useState } from "react";
-import React from "react";
 
-export const AddTask = () => {
+export const AddTask = ({ onAdd }) => {
   const [text, setText] = useState("");
   const [day, setDay] = useState("");
   const [reminder, setReminder] = useState(false);
 
+  const onSubmit = (e) => {
+    e.preventDefault();
+
+    if (!text) {
+      alert("Please add a task");
+      return;
+    }
+
+    {/*call the function in app.js */}
+    onAdd({ text, day, reminder });
+    setText("");
+    setDay("");
+    setReminder(false);
+  };
   return (
-    <form className="add-form">
+    <form className="add-form" onSubmit={onSubmit}>
+      {/* within this div, use the class name form control to style it */ }
       <div className="form-control">
         <label>Task</label>
         <input
@@ -33,6 +47,7 @@ export const AddTask = () => {
         <label>Set Reminder</label>
         <input
           type="checkbox"
+          checked={reminder}
           placeholder="Set Reminder"
           value={reminder}
           onChange={(e) => setReminder(e.currentTarget.checked)}
@@ -40,6 +55,8 @@ export const AddTask = () => {
       </div>
 
       <input type="submit" value="Save Task" className="btn btn-block " />
-    </form>
+    </form> 
   );
 };
+
+export default AddTask;
