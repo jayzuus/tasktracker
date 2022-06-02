@@ -3,6 +3,7 @@ import { Header } from "./components/Header";
 import { Tasks } from "./components/Tasks";
 import { AddTask } from "./components/AddTask";
 function App() {
+  const [showAddTask, setShowAddTask] = useState(false);
   const [tasks, setTasks] = useState([
     {
       id: 1,
@@ -17,6 +18,15 @@ function App() {
       reminder: true,
     },
   ]);
+
+  const addTask = (task) => {
+    const id = Math.floor(Math.random * 10000);
+    {
+      /* task is an object, so we need the three dots before it, remember it has task day and reminder */
+    }
+    const newTask = { id, ...task };
+    setTasks([...tasks, newTask]);
+  };
 
   const deleteTask = (id) => {
     {
@@ -36,13 +46,17 @@ function App() {
 
   return (
     <div className="container">
-      <Header />
+      <Header
+        onAdd={() => setShowAddTask(!showAddTask)}
+        showAdd={showAddTask}
+      />
+      {/*if the showAddTask is set to true, then show the add task form, else show nothing */}
+      {showAddTask && <AddTask onAdd={addTask} />}
       {tasks.length > 0 ? (
         <Tasks tasks={tasks} onDelete={deleteTask} onToggle={toggleReminder} />
       ) : (
         "No tasks available"
       )}
-      <AddTask />
     </div>
   );
 }

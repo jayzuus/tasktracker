@@ -15,4 +15,4 @@ export const Tasks = ({ tasks, onDelete, onToggle }) => {
   );
 };
 
-export default Task;
+export default Tasks;
